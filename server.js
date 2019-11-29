@@ -4,9 +4,12 @@ const { db, connect } = require("./services/db");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-require("dotenv").config;
+
+// connect mysql database
 connect(db);
-console.log(process.env)
+
+require("./controllers/buckets")(db);
+
 app.use(bodyParser.json());
 
 app.listen(PORT, () => {
