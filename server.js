@@ -1,16 +1,23 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { db, connect } = require("./services/db");
-
 const app = express();
+const { db, connect } = require("./services/db");
+const bucketRoutes = require("./routes/buckets");
 const PORT = process.env.PORT || 4000;
+app.use(bodyParser.json());
 
 // connect mysql database
+
 connect(db);
 
-require("./controllers/buckets")(db);
+/***
+ * Bind controllers
+ */
 
-app.use(bodyParser.json());
+// call routes
+
+
+app.use(bucketRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is shining on port ${PORT}`);
