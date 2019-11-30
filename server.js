@@ -6,6 +6,16 @@ const bucketRoutes = require("./routes/buckets");
 const PORT = process.env.PORT || 4000;
 app.use(bodyParser.json());
 
+/**
+ * Handle cross origin sharing
+ */
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
+
 // connect mysql database
 
 connect(db);
@@ -15,7 +25,6 @@ connect(db);
  */
 
 // call routes
-
 
 app.use(bucketRoutes);
 
