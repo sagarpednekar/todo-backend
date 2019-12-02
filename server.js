@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const app = express();
 const { connect } = require("./services/db");
 const bucketRoutes = require("./routes/buckets");
-const taskRoutes = require("./routes/tasks");
+// const taskRoutes = require("./routes/tasks");
 
 const PORT = process.env.PORT || 4000;
 app.use(bodyParser.json());
@@ -29,7 +29,7 @@ connect();
 // call routes
 
 app.use(bucketRoutes);
-app.use(taskRoutes);
+// app.use(taskRoutes);
 
 app.listen(PORT, () => {
    console.log(`Server is shining on port ${PORT}`);
