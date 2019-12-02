@@ -1,8 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const { db, connect } = require("./services/db");
+const { connect } = require("./services/db");
 const bucketRoutes = require("./routes/buckets");
+const taskRoutes = require("./routes/tasks");
+
 const PORT = process.env.PORT || 4000;
 app.use(bodyParser.json());
 
@@ -11,14 +13,14 @@ app.use(bodyParser.json());
  */
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
+   res.header("Access-Control-Allow-Origin", "*");
+   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+   next();
 });
 
 // connect mysql database
 
-connect(db);
+connect();
 
 /***
  * Bind controllers
@@ -27,7 +29,8 @@ connect(db);
 // call routes
 
 app.use(bucketRoutes);
+app.use(taskRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Server is shining on port ${PORT}`);
+   console.log(`Server is shining on port ${PORT}`);
 });

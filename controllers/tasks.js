@@ -1,9 +1,9 @@
-const { Bucket } = require("../model/bucket");
+const { Task } = require("../model/task");
 module.exports = {
   findAll: async function(req, res) {
     try {
-      await Bucket.sync();
-      const buckets = await Bucket.findAll({
+      await Task.sync();
+      const tasks = await Task.findAll({
         // include: [
         //    {
         //       all: true,
@@ -11,18 +11,17 @@ module.exports = {
         //    }
         // ]
       });
-      console.log(buckets);
-      res.send({ buckets });
+      res.send({ status: 1, tasks });
     } catch (error) {
-      res.status(501);
+      res.status(501).send({ status: 0 });
     }
   },
   createOne: async function(req, res) {
     try {
-      const { bucket } = req.body;
-      await Bucket.sync();
-      const response = await Bucket.create({
-        ...bucket
+      const { task } = req.body;
+      await Task.sync();
+      const response = await Task.create({
+        ...task
       });
       res.status(201).send({
         status: 1,
@@ -39,11 +38,12 @@ module.exports = {
   update: async function(req, res) {
     try {
       const { id } = req.params;
-      const { name } = req.body.bucket;
+      const { name, status } = req.body.task;
 
-      const result = await Bucket.update(
+      const result = await Task.update(
         {
-          name
+          name,
+          status
         },
         {
           where: {
@@ -52,44 +52,43 @@ module.exports = {
         }
       );
 
-      res.status(204).send({
+      res.status(200).send({
         status: 1,
-        data: result
+        data: []
       });
     } catch (error) {
-      res.status(501);
+      res.status(501).send({ status: 0, data: [] });
     }
   },
   findById: async function(req, res) {
     try {
       const { id } = req.params;
-      const result = await Bucket.findOne({ where: { id } });
+      const result = await Task.findOne({ where: { id } });
       if (!result) throw new Error("not found");
       res.status(200).send({
         status: 1,
         data: result
       });
     } catch (error) {
-      res.status(501).send({ status: 0 });
+      res.status(501).send({ status: 0, data: [] });
     }
   },
-
   remove: async function(req, res) {
     try {
       const { id } = req.params;
       if (!id) throw new Error("id not found for bucket");
-      const result = await Bucket.destroy({
+      const result = await Task.destroy({
         where: {
           id
         }
       });
       if (!result) throw new Error("not found");
-      res.status(204).send({
+      res.status(200).send({
         status: 1,
-        data: result
+        data: []
       });
     } catch (error) {
-      res.status(501).send({ status: 0 });
+      res.status(501).send({ status: 0, data: [] });
     }
   }
 };
