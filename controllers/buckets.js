@@ -3,16 +3,22 @@ module.exports = {
   findAll: async function(req, res) {
     try {
       await Bucket.sync();
-      const buckets = await Bucket.findAll({
-        // include: [
-        //    {
-        //       all: true,
-        //       nested: true
-        //    }
-        // ]
-      });
-      console.log(buckets);
-      res.send({ buckets });
+      let buckets;
+      console.log(req.query.tasks);
+      if (req.query.tasks) {
+        buckets = await Bucket.findAll({
+          include: [
+            {
+              all: true,
+              nested: true
+            }
+          ]
+        });
+        res.send({ status: 1, data: buckets });
+        return;
+      }
+      buckets = await Bucket.findAll({});
+      res.send({ status: 1, data: buckets });
     } catch (error) {
       res.status(501);
     }

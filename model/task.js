@@ -4,7 +4,7 @@ class Task extends Model {}
 Task.init(
   {
     name: DataTypes.STRING,
-    status: DataTypes.BOOLEAN
+    status: DataTypes.BOOLEAN,
   },
   {
     sequelize,
@@ -18,14 +18,7 @@ Task.init(
 );
 
 sequelize.sync();
-//   .then(() =>
-//     User.create({
-//       username: "janedoe",
-//       birthday: new Date(1980, 6, 20)
-//     })
-//   )
-//   .then(jane => {
-//     console.log(jane.toJSON());
-//   });
+
+// Task.belongsTo(Bucket);
 
 module.exports = { Task };
