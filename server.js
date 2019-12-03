@@ -13,9 +13,9 @@ app.use(bodyParser.json());
  */
 
 app.use((req, res, next) => {
-   res.header("Access-Control-Allow-Origin", "*");
-   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-   next();
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
 });
 
 // connect mysql database
@@ -31,6 +31,10 @@ connect();
 app.use(bucketRoutes);
 app.use(taskRoutes);
 
+app.get("/", (req, res) => {
+  res.status(200).send("API engine");
+});
+
 app.listen(PORT, () => {
-   console.log(`Server is shining on port ${PORT}`);
+  console.log(`Server is shining on port ${PORT}`);
 });
