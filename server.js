@@ -4,7 +4,8 @@ const app = express();
 const { connect } = require("./services/db");
 const bucketRoutes = require("./routes/buckets");
 const taskRoutes = require("./routes/tasks");
-
+var cors = require('cors');
+app.use(cors());
 const PORT = process.env.PORT || 4000;
 app.use(bodyParser.json());
 
