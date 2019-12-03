@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 const { sequelize } = require("../services/db");
+const { Task } = require("../model/task");
 class Bucket extends Model {}
 Bucket.init(
   {
@@ -17,14 +18,7 @@ Bucket.init(
 );
 
 sequelize.sync();
-//   .then(() =>
-//     User.create({
-//       username: "janedoe",
-//       birthday: new Date(1980, 6, 20)
-//     })
-//   )
-//   .then(jane => {
-//     console.log(jane.toJSON());
-//   });
+
+Bucket.hasMany(Task);
 
 module.exports = { Bucket };

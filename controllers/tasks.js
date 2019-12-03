@@ -11,8 +11,10 @@ module.exports = {
         //    }
         // ]
       });
+      console.log(tasks)
       res.send({ status: 1, tasks });
     } catch (error) {
+      console.log("--->",error)
       res.status(501).send({ status: 0 });
     }
   },
